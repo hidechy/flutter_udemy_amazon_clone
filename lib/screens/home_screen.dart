@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:test_udemy_amazon_clone2/components/drawer.dart';
+
+import '../components/drawer.dart';
+import '../styles/styles.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,20 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Colors.pinkAccent,
-                Colors.purpleAccent,
-              ],
-              begin: FractionalOffset(0, 0),
-              end: FractionalOffset(1, 0),
-              stops: [0, 1],
-              tileMode: TileMode.clamp,
-            ),
-          ),
-        ),
+        flexibleSpace: Container(decoration: pinkBackGround),
         title: const Text(
           'iShop',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),

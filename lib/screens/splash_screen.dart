@@ -1,7 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:test_udemy_amazon_clone2/screens/home_screen.dart';
+
+import '../styles/styles.dart';
+
+import 'home_screen.dart';
 
 class MySplashScreen extends StatefulWidget {
   const MySplashScreen({super.key});
@@ -15,14 +18,14 @@ class _MySplashScreenState extends State<MySplashScreen> {
   @override
   void initState() {
     super.initState();
-    
+
     splashScreenTimer();
   }
 
   ///
   void splashScreenTimer() {
-    Timer(Duration(seconds: 4), () async {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+    Timer(const Duration(seconds: 4), () async {
+      await Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
     });
   }
 
@@ -30,19 +33,8 @@ class _MySplashScreenState extends State<MySplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Colors.pinkAccent,
-              Colors.purpleAccent,
-            ],
-            begin: FractionalOffset(0, 0),
-            end: FractionalOffset(1, 0),
-            stops: [0, 1],
-            tileMode: TileMode.clamp,
-          ),
-        ),
+      child: DecoratedBox(
+        decoration: pinkBackGround,
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -51,8 +43,8 @@ class _MySplashScreenState extends State<MySplashScreen> {
                 padding: const EdgeInsets.all(12),
                 child: Image.asset('assets/images/welcome.png'),
               ),
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 'iShop Users App.',
                 style: TextStyle(fontSize: 30, letterSpacing: 3, color: Colors.white, fontWeight: FontWeight.bold),
               ),
