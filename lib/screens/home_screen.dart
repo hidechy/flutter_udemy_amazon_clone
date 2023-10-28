@@ -1,12 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:test_udemy_amazon_clone2/extensions/extensions.dart';
-import 'package:test_udemy_amazon_clone2/styles/styles.dart';
 
-import '../components/brands_card.dart';
 import '../components/drawer.dart';
-import '../components/shared_prefs.dart';
-import '../models/brands.dart';
+import '../data/data.dart';
+import '../styles/styles.dart';
 import 'brands_upload_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -43,39 +40,42 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: SizedBox(
-        height: context.screenSize.height * 0.8,
-        child: StreamBuilder(
-          stream: FirebaseFirestore.instance
-              .collection('sellers')
-              .doc(sharedPreferences!.getString('uid'))
-              .collection('brands')
-              .orderBy('publishedDate', descending: true)
-              .snapshots(),
-          // ignore: strict_raw_type
-          builder: (context, AsyncSnapshot dataSnapshot) {
-            if (dataSnapshot.hasData) {
-              // //display brands
-              return ListView.builder(
-                itemBuilder: (context, index) {
-                  final brandsModel = Brands.fromJson(
-                    // ignore: avoid_dynamic_calls
-                    dataSnapshot.data.docs[index].data() as Map<String, dynamic>,
-                  );
-
-                  return BrandsCard(model: brandsModel, context: context);
-                },
-                // ignore: avoid_dynamic_calls
-                itemCount: dataSnapshot.data.docs.length,
-              );
-            } else //if brands NOT exists
-            {
-              return const Center(
-                child: Text('No brands exists'),
-              );
-            }
-          },
-        ),
+      body: CustomScrollView(
+        slivers: [
+          //image slider
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(6),
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height * .3,
+                width: MediaQuery.of(context).size.width,
+                child: CarouselSlider(
+                  options: CarouselOptions(
+                    height: MediaQuery.of(context).size.height * .9,
+                    autoPlay: true,
+                    autoPlayInterval: const Duration(seconds: 2),
+                    enlargeCenterPage: true,
+                  ),
+                  items: itemsImagesList.map((index) {
+                    return Builder(builder: (BuildContext c) {
+                      return Container(
+                        width: MediaQuery.of(context).size.width,
+                        margin: const EdgeInsets.symmetric(horizontal: 1),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(40),
+                          child: Image.asset(
+                            index,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      );
+                    });
+                  }).toList(),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
