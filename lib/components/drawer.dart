@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'shared_prefs.dart';
 
 class MyDrawer extends StatefulWidget {
   const MyDrawer({super.key});
@@ -16,21 +17,19 @@ class _MyDrawerState extends State<MyDrawer> {
         children: [
           Container(
             padding: const EdgeInsets.only(top: 20, bottom: 12),
-            child: const Column(
+            child: Column(
               children: [
                 SizedBox(
                   width: 130,
                   height: 130,
                   child: CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      'http://toyohide.work/BrainLog/public/UPPHOTO/2023/2023-10-27/20231027_132920865.jpg',
-                    ),
+                    backgroundImage: NetworkImage(sharedPreferences!.getString('photoUrl')!),
                   ),
                 ),
-                SizedBox(height: 12),
+                const SizedBox(height: 12),
                 Text(
-                  'user name',
-                  style: TextStyle(color: Colors.grey, fontSize: 20, fontWeight: FontWeight.bold),
+                  sharedPreferences!.getString('name')!,
+                  style: const TextStyle(color: Colors.grey, fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
