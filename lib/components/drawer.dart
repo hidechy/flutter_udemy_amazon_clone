@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../screens/splash_screen.dart';
 import 'shared_prefs.dart';
 
 class MyDrawer extends StatefulWidget {
@@ -72,7 +74,11 @@ class _MyDrawerState extends State<MyDrawer> {
                 ListTile(
                   leading: const Icon(Icons.exit_to_app, color: Colors.grey),
                   title: const Text('Sign Out', style: TextStyle(color: Colors.grey)),
-                  onTap: () {},
+                  onTap: () {
+                    FirebaseAuth.instance.signOut();
+
+                    Navigator.push(context, MaterialPageRoute(builder: (c) => const MySplashScreen()));
+                  },
                 ),
               ],
             ),
